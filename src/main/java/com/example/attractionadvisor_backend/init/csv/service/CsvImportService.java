@@ -1,0 +1,31 @@
+package com.example.attractionadvisor_backend.init.csv.service;
+
+
+import com.example.attractionadvisor_backend.domain.entity.attraction.Attraction;
+import com.example.attractionadvisor_backend.init.csv.domain.AttractionMapper;
+import com.example.attractionadvisor_backend.init.csv.domain.CsvReader;
+import com.example.attractionadvisor_backend.init.csv.jpa.AttractionCsvRepository;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+
+@Service
+@RequiredArgsConstructor
+public class CsvImportService {
+    private final CsvReader csvReader;
+    private final AttractionMapper attractionMapper;
+    private final AttractionCsvRepository attractionCsvRepository;
+
+    @Transactional
+    public List<Attraction> importCsvData() {
+        List<String[]> rawData = csvReader.readCsvFile();
+        List<Attraction> attractions = attractionMapper.mapToAttractions(rawData);
+        return saveAttractions(attractions);
+    }
+
+    private List<Attraction> saveAttractions(List<Attraction> attractions) {
+        return attractionCsvRepository.saveAll(attractions);
+    }
+}
