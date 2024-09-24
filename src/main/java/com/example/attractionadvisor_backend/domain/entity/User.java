@@ -1,20 +1,19 @@
-package com.example.attractionadvisor_backend.domain.entity.user;
+package com.example.attractionadvisor_backend.domain.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.Set;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +27,11 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
+    @Builder
+    public User(String username, String email,String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<UserPreference> preferences;
 }

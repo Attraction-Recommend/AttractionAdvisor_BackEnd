@@ -1,6 +1,6 @@
 package com.example.attractionadvisor_backend.init.csv.controller;
 
-import com.example.attractionadvisor_backend.domain.entity.attraction.Attraction;
+import com.example.attractionadvisor_backend.domain.entity.VisitDestination;
 import com.example.attractionadvisor_backend.init.csv.service.CsvImportService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +18,8 @@ public class CsvImportController {
 
     @GetMapping("/csv")
     public ResponseEntity<String> importCsvData() {
-        List<Attraction> importedAttractions = csvImportService.importCsvData();
+        List<VisitDestination> importedVisitDestinations = csvImportService.importCsvData();
         return ResponseEntity.ok(
-                "Imported " + importedAttractions.size() + " attractions from CSV file." + "⚡  " + importedAttractions);
+                "Imported " + importedVisitDestinations.size() + " attractions from CSV file." + "⚡  " + importedVisitDestinations);
     }
 }

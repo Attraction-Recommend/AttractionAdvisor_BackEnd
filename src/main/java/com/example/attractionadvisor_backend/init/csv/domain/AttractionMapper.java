@@ -1,6 +1,6 @@
 package com.example.attractionadvisor_backend.init.csv.domain;
 
-import com.example.attractionadvisor_backend.domain.entity.attraction.Attraction;
+import com.example.attractionadvisor_backend.domain.entity.VisitDestination;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -10,26 +10,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class AttractionMapper {
 
-    public List<Attraction> mapToAttractions(List<String[]> rawData) {
+    public List<VisitDestination> mapToAttractions(List<String[]> rawData) {
         return rawData.stream()
                 .map(this::createAttractionFromCsvData)
                 .collect(Collectors.toList());
     }
 
-    private Attraction createAttractionFromCsvData(String[] data) {
+    private VisitDestination createAttractionFromCsvData(String[] data) {
         if (data.length < 3) {
             log.warn("Insufficient data in CSV row. Expected at least 3 columns, got {}", data.length);
             return null;
         }
 
-        Attraction attraction = new Attraction();
-        attraction.setTravelId(data[0]);
-        attraction.setPoiId(data[1]);
-        attraction.setPoiNm(data[2]);
+        VisitDestination visitDestination = VisitDestination.builder()
+                .userId(data[0])
+                .destinationId(data[1])
+                .build();
 
-        log.debug("Created Attraction: travelId={}, poiId={}, poiNm={}",
-                attraction.getTravelId(), attraction.getPoiId(), attraction.getPoiNm());
-
-        return attraction;
+        return visitDestination;
     }
 }
