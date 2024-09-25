@@ -1,6 +1,7 @@
 package com.example.attractionadvisor_backend.domain.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +20,7 @@ public class Destination {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "POI_ID")
+    @Column(name = "POI_ID", unique = true)
     private String destinationId;
 
     @Column(nullable = false)
@@ -27,19 +28,20 @@ public class Destination {
 
     @Column(nullable = false)
     private String description;
-
-    @Column(name = "X_COORD")
-    private Double latitude;
-
-    @Column(name = "Y_COORD")
-    private Double longitude;
+    @Embedded
+    private Coordinates coordinates;
 
     @Builder
-    public Destination(String destinationId,String name, String description, Double latitude, Double longitude) {
-        this.destinationId  = destinationId;
+    public Destination(String destinationId, String name, String description, Coordinates coordinates) {
+        this.destinationId = destinationId;
         this.name = name;
         this.description = description;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.coordinates = coordinates;
+    }
+
+    public void updateDetails(String name, String description, Coordinates coordinates) {
+        this.name = name;
+        this.description = description;
+        this.coordinates = coordinates;
     }
 }

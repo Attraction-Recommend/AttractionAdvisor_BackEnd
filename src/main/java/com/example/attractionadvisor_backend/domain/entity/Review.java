@@ -42,4 +42,8 @@ public class Review {
         this.rating = rating;
         this.createdAt = createdAt;
     }
+    public void updateReview(String content, int rating) {
+        this.content = content;
+        this.rating = rating;
+    }
 }

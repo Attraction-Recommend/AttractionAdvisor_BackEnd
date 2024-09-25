@@ -1,4 +1,4 @@
-package com.example.attractionadvisor_backend.presentation.dto;
+package com.example.attractionadvisor_backend.presentation.request;
 
 import lombok.Data;
 

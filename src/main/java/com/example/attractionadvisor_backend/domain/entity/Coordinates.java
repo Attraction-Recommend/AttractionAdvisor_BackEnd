@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @Getter
 @NoArgsConstructor
-public class Address {
+public class Coordinates {
 
 
     @Column(name ="X_COORD")
@@ -20,7 +20,7 @@ public class Address {
     private Double longitude;
 
     @Builder
-    public Address(Double latitude,Double longitude){
+    public Coordinates(Double latitude, Double longitude){
         this.latitude = latitude;
         this.longitude = longitude;
     }

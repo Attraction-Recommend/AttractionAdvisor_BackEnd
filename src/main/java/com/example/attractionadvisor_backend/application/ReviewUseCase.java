@@ -1,8 +1,8 @@
 package com.example.attractionadvisor_backend.application;
 
+import com.example.attractionadvisor_backend.application.dto.ReviewDto;
 import com.example.attractionadvisor_backend.domain.entity.Review;
 import com.example.attractionadvisor_backend.domain.service.ReviewService;
-import com.example.attractionadvisor_backend.infrastructure.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,24 +12,49 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ReviewUseCase {
-    private final ReviewRepository reviewRepository;
     private final ReviewService reviewService;
 
+
     @Transactional
-    public Review addReview(Long userId, String destinationId, String content, int rating) {
+    public ReviewDto createReview(Long userId, String destinationId, String content, int rating) {
         Review review = reviewService.createReview(userId, destinationId, content, rating);
-        return reviewRepository.save(review);
+        return convertToDto(review);
     }
 
-    public Page<Review> searchReviews(String keyword, Pageable pageable) {
-        return reviewRepository.searchReviews(keyword, pageable);
+    public ReviewDto getReviewById(Long reviewId) {
+        Review review = reviewService.getReviewById(reviewId);
+        return convertToDto(review);
+    }
+
+    @Transactional
+    public ReviewDto updateReview(Long reviewId, String content, int rating) {
+        Review updatedReview = reviewService.updateReview(reviewId, content, rating);
+        return convertToDto(updatedReview);
+    }
+
+    @Transactional
+    public void deleteReview(Long reviewId) {
+        reviewService.deleteReview(reviewId);
+    }
+
+    public Page<ReviewDto> searchReviews(String keyword, Pageable pageable) {
+        return reviewService.searchReviews(keyword, pageable).map(this::convertToDto);
     }
 
     public Double getAverageRating(String destinationId) {
-        return reviewRepository.getAverageRatingForDestination(destinationId);
+        return reviewService.getAverageRating(destinationId);
     }
-
     public Long getReviewCount(String destinationId) {
-        return reviewRepository.getReviewCountForDestination(destinationId);
+        return reviewService.getReviewCount(destinationId);
+    }
+    private ReviewDto convertToDto(Review review) {
+        ReviewDto dto = new ReviewDto();
+        dto.setId(review.getId());
+        dto.setUserId(review.getUserId());
+        dto.setDestinationId(review.getDestinationId());
+        dto.setContent(review.getContent());
+        dto.setRating(review.getRating());
+        dto.setCreatedAt(review.getCreatedAt());
+        return dto;
     }
 }

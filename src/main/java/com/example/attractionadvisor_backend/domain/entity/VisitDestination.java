@@ -1,12 +1,12 @@
 package com.example.attractionadvisor_backend.domain.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,31 +20,24 @@ public class VisitDestination {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "TRAVEL_ID")
+
+    @Column(name = "TRAVEL_ID", nullable = false)
     private String userId;
 
-    @Column(name = "POI_ID")
+    @Column(name = "POI_ID", nullable = false)
     private String destinationId;
 
-    @Column(name = "VISIT_START_YMD")
-    private LocalDate visitStart;
-
-    @Column(name = "VISIT_END_YMD")
-    private LocalDate visitEnd;
+    @Embedded
+    private VisitPeriod visitPeriod;
 
     @Builder
-    public VisitDestination(String userId, String destinationId, LocalDate visitStart, LocalDate visitEnd) {
+    public VisitDestination(String userId, String destinationId, VisitPeriod visitPeriod) {
         this.userId = userId;
         this.destinationId = destinationId;
-        this.visitStart = visitStart;
-        this.visitEnd = visitEnd;
+        this.visitPeriod = visitPeriod;
     }
 
-    public LocalDate getVisitStartDate() {
-        return this.visitStart;
-    }
-
-    public LocalDate getVisitEndDate() {
-        return this.visitEnd;
+    public void updateVisitPeriod(VisitPeriod newVisitPeriod) {
+        this.visitPeriod = newVisitPeriod;
     }
 }
