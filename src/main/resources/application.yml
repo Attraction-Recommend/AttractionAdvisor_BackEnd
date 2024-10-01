@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: attractionAdvisor_backend
+  datasource:
+    url: jdbc:h2:mem:attraction
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+#    hikari:
+#      maximum-pool-size: 50
+#      connection-timeout: 5000
+#      connection-init-sql: SELECT 1
+#      validation-timeout: 2000
+#      minimum-idle: 10
+#      idle-timeout: 600000
+#      max-lifetime: 1800000
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
+      settings:
+        web-allow-others: true
+
+
+server:
+  port: 9998
+  tomcat:
+    mbeanregistry:
+      enabled: true
+
+python:
+  api:
+    url: http://localhost:9999/recommend
+    update-model-path: http://localhost:9999/recommend/update_model
+
+file:
+  csv:
+    path: static/info.csv
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+  endpoint:
+    health:
+      show-details: always

@@ -40,6 +40,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     //CSV 라이브러리
     implementation 'com.opencsv:opencsv:5.7.1'
+    // 모니터링을 위해 액츄에이터
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // 프로메테우스
+    implementation 'io.micrometer:micrometer-registry-prometheus'
 }
 
 tasks.named('test') {
