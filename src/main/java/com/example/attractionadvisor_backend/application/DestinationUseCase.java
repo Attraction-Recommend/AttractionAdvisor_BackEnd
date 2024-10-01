@@ -50,8 +50,8 @@ public class DestinationUseCase {
         dto.setDestinationId(destination.getDestinationId());
         dto.setName(destination.getName());
         dto.setDescription(destination.getDescription());
-        dto.setLatitude(destination.getCoordinates().getLatitude());
-        dto.setLongitude(destination.getCoordinates().getLongitude());
+        dto.setLatitude(destination.getCoordinates().getX_coord());
+        dto.setLongitude(destination.getCoordinates().getY_coord());
         return dto;
     }
 }

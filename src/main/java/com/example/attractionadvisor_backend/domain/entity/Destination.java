@@ -20,7 +20,7 @@ public class Destination {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "POI_ID", unique = true)
+    @Column(name = "DESTINATION_ID", unique = true)
     private String destinationId;
 
     @Column(nullable = false)

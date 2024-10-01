@@ -21,20 +21,27 @@ public class VisitDestination {
     private Long id;
 
 
-    @Column(name = "TRAVEL_ID", nullable = false)
+    @Column(name = "USER_ID", nullable = false)
     private String userId;
 
-    @Column(name = "POI_ID", nullable = false)
+    @Column(name = "DESTINATION_ID", nullable = false)
     private String destinationId;
+
+    private String destinationName;
 
     @Embedded
     private VisitPeriod visitPeriod;
 
+    @Embedded
+    private Coordinates coordinates;
+
     @Builder
-    public VisitDestination(String userId, String destinationId, VisitPeriod visitPeriod) {
+    public VisitDestination(String userId, String destinationId, VisitPeriod visitPeriod, String destinationName, Coordinates coordinates) {
         this.userId = userId;
         this.destinationId = destinationId;
         this.visitPeriod = visitPeriod;
+        this.destinationName = destinationName;
+        this.coordinates = coordinates;
     }
 
     public void updateVisitPeriod(VisitPeriod newVisitPeriod) {

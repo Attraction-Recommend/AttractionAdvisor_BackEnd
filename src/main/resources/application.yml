@@ -36,7 +36,7 @@ python:
 
 file:
   csv:
-    path: static/info.csv
+    path: static/useful_info.csv
 
 management:
   endpoints:
